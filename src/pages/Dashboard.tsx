@@ -4,6 +4,7 @@ import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Plus, BookOpen, HelpCircle, Bot, Code, Calendar, ArrowRight } from "lucide-react";
+import { toast } from "sonner";
 
 // Mock data - will be replaced with Supabase
 const mockRobots = [
@@ -134,10 +135,26 @@ const Dashboard = () => {
                       </div>
                     </div>
                     <div className="flex items-center gap-2">
-                      <Button variant="outline" size="sm">
+                      <Button 
+                        variant="outline" 
+                        size="sm"
+                        onClick={() => toast.info(
+                          language === "da" 
+                            ? "Dette er en eksempel-robot. Opret din egen robot for at se og redigere kode." 
+                            : "This is an example robot. Create your own robot to view and edit code."
+                        )}
+                      >
                         {t.dashboard.viewCode}
                       </Button>
-                      <Button variant="outline" size="sm">
+                      <Button 
+                        variant="outline" 
+                        size="sm"
+                        onClick={() => toast.info(
+                          language === "da" 
+                            ? "Dette er en eksempel-robot. Opret din egen robot for at redigere den." 
+                            : "This is an example robot. Create your own robot to edit it."
+                        )}
+                      >
                         {t.dashboard.editRobot}
                       </Button>
                     </div>
