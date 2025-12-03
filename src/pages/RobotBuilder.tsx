@@ -1,5 +1,7 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useAuth } from "@/contexts/AuthContext";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
@@ -10,6 +12,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { DisclaimerBanner } from "@/components/DisclaimerBanner";
 import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 import { 
   ArrowLeft, 
   ArrowRight, 
@@ -47,9 +50,12 @@ interface RobotConfig {
 const RobotBuilder = () => {
   const { t, language } = useLanguage();
   const { toast } = useToast();
+  const { user, signOut } = useAuth();
+  const navigate = useNavigate();
   
   const [step, setStep] = useState(1);
   const totalSteps = 5;
+  const [isSaving, setIsSaving] = useState(false);
   
   const [config, setConfig] = useState<RobotConfig>({
     platform: null,
@@ -235,10 +241,67 @@ void ManageTrades()
     URL.revokeObjectURL(url);
   };
 
-  const saveRobot = () => {
-    toast({
-      title: t.builder.robotSaved,
-    });
+  const saveRobot = async () => {
+    if (!user) {
+      toast({
+        title: language === "da" ? "Fejl" : "Error",
+        description: language === "da" ? "Du skal være logget ind" : "You must be logged in",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setIsSaving(true);
+    
+    try {
+      const rulesJson = {
+        indicators: config.indicators,
+        timeframe: config.timeframe,
+        entryConditions: config.entryConditions,
+        exitConditions: config.exitConditions,
+        takeProfit: config.takeProfit,
+        stopLoss: config.stopLoss,
+        useTrailingStop: config.useTrailingStop,
+        accountCurrency: config.accountCurrency,
+        lotSize: config.lotSize,
+        riskPercent: config.riskPercent,
+        maxOpenTrades: config.maxOpenTrades,
+        tradingHours: config.tradingHours,
+      };
+
+      const { error } = await supabase
+        .from("robots")
+        .insert({
+          user_id: user.id,
+          name: config.robotName,
+          platform: config.platform!,
+          strategy_type: config.strategy!,
+          rules_json: rulesJson,
+          generated_code: generateCode(),
+        });
+
+      if (error) throw error;
+
+      toast({
+        title: t.builder.robotSaved,
+      });
+      
+      navigate("/dashboard");
+    } catch (error) {
+      console.error("Error saving robot:", error);
+      toast({
+        title: language === "da" ? "Fejl" : "Error",
+        description: language === "da" ? "Kunne ikke gemme robot" : "Failed to save robot",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+  const handleLogout = async () => {
+    await signOut();
+    navigate("/");
   };
 
   const strategies = [
@@ -273,7 +336,7 @@ void ManageTrades()
 
   return (
     <div className="min-h-screen flex flex-col bg-background">
-      <Navbar isAuthenticated onLogout={() => window.location.href = "/"} />
+      <Navbar isAuthenticated onLogout={handleLogout} />
 
       <main className="flex-1 py-8">
         <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
@@ -597,9 +660,15 @@ void ManageTrades()
                   <ArrowRight className="h-4 w-4 ml-2" />
                 </Button>
               ) : (
-                <Button onClick={saveRobot} disabled={!canProceed()}>
-                  <Check className="h-4 w-4 mr-2" />
-                  {t.builder.saveRobot}
+                <Button onClick={saveRobot} disabled={!canProceed() || isSaving}>
+                  {isSaving ? (
+                    t.common.loading
+                  ) : (
+                    <>
+                      <Check className="h-4 w-4 mr-2" />
+                      {t.builder.saveRobot}
+                    </>
+                  )}
                 </Button>
               )}
             </div>

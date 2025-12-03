@@ -1,34 +1,79 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useAuth } from "@/contexts/AuthContext";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
-import { Plus, BookOpen, HelpCircle, Bot, Code, Calendar, ArrowRight } from "lucide-react";
+import { Plus, BookOpen, HelpCircle, Bot, Code, Calendar, ArrowRight, Trash2 } from "lucide-react";
 import { toast } from "sonner";
+import { useEffect, useState } from "react";
+import { supabase } from "@/integrations/supabase/client";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 
-// Mock data - will be replaced with Supabase
-const mockRobots = [
-  {
-    id: "1",
-    name: "Trend Follower EA",
-    platform: "MT4",
-    strategy: "trend_following",
-    createdAt: "2024-01-15",
-  },
-  {
-    id: "2", 
-    name: "Breakout Bot",
-    platform: "MT5",
-    strategy: "breakout",
-    createdAt: "2024-01-10",
-  },
-];
+interface Robot {
+  id: string;
+  name: string;
+  platform: string;
+  strategy_type: string;
+  generated_code: string | null;
+  created_at: string;
+}
 
 const Dashboard = () => {
   const { t, language } = useLanguage();
+  const { user, signOut } = useAuth();
+  const navigate = useNavigate();
+  const [robots, setRobots] = useState<Robot[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [selectedRobot, setSelectedRobot] = useState<Robot | null>(null);
 
-  // Mock user - will be replaced with auth
-  const userName = "Trader";
+  useEffect(() => {
+    fetchRobots();
+  }, []);
+
+  const fetchRobots = async () => {
+    try {
+      const { data, error } = await supabase
+        .from("robots")
+        .select("*")
+        .order("created_at", { ascending: false });
+
+      if (error) throw error;
+      setRobots(data || []);
+    } catch (error) {
+      console.error("Error fetching robots:", error);
+      toast.error(language === "da" ? "Kunne ikke hente robotter" : "Failed to fetch robots");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const deleteRobot = async (robotId: string) => {
+    try {
+      const { error } = await supabase
+        .from("robots")
+        .delete()
+        .eq("id", robotId);
+
+      if (error) throw error;
+      
+      setRobots(robots.filter(r => r.id !== robotId));
+      toast.success(language === "da" ? "Robot slettet" : "Robot deleted");
+    } catch (error) {
+      console.error("Error deleting robot:", error);
+      toast.error(language === "da" ? "Kunne ikke slette robot" : "Failed to delete robot");
+    }
+  };
+
+  const handleLogout = async () => {
+    await signOut();
+    navigate("/");
+  };
 
   const strategyLabels: Record<string, string> = {
     trend_following: language === "da" ? "Trend-følgende" : "Trend following",
@@ -37,16 +82,20 @@ const Dashboard = () => {
     custom: language === "da" ? "Tilpasset" : "Custom",
   };
 
+  const formatDate = (dateString: string) => {
+    return new Date(dateString).toLocaleDateString(language === "da" ? "da-DK" : "en-US");
+  };
+
   return (
     <div className="min-h-screen flex flex-col bg-background">
-      <Navbar isAuthenticated onLogout={() => window.location.href = "/"} />
+      <Navbar isAuthenticated onLogout={handleLogout} />
 
       <main className="flex-1 py-8">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           {/* Welcome */}
           <div className="mb-8 animate-fade-in">
             <h1 className="text-3xl font-bold text-foreground">
-              {t.dashboard.welcome}, {userName} 👋
+              {t.dashboard.welcome}, {user?.email?.split("@")[0] || "Trader"} 👋
             </h1>
           </div>
 
@@ -100,7 +149,11 @@ const Dashboard = () => {
               <h2 className="text-xl font-semibold text-foreground">{t.dashboard.recentRobots}</h2>
             </div>
 
-            {mockRobots.length === 0 ? (
+            {isLoading ? (
+              <div className="rounded-xl border border-border bg-card p-12 text-center">
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto"></div>
+              </div>
+            ) : robots.length === 0 ? (
               <div className="rounded-xl border border-dashed border-border bg-muted/30 p-12 text-center">
                 <Bot className="mx-auto h-12 w-12 text-muted-foreground mb-4" />
                 <h3 className="text-lg font-medium text-foreground mb-2">{t.dashboard.noRobots}</h3>
@@ -110,7 +163,7 @@ const Dashboard = () => {
               </div>
             ) : (
               <div className="space-y-4">
-                {mockRobots.map((robot) => (
+                {robots.map((robot) => (
                   <div
                     key={robot.id}
                     className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 rounded-xl border border-border bg-card p-4 card-shadow"
@@ -126,10 +179,10 @@ const Dashboard = () => {
                             <Code className="h-3 w-3" />
                             {robot.platform}
                           </span>
-                          <span>{strategyLabels[robot.strategy]}</span>
+                          <span>{strategyLabels[robot.strategy_type] || robot.strategy_type}</span>
                           <span className="inline-flex items-center gap-1">
                             <Calendar className="h-3 w-3" />
-                            {robot.createdAt}
+                            {formatDate(robot.created_at)}
                           </span>
                         </div>
                       </div>
@@ -138,24 +191,16 @@ const Dashboard = () => {
                       <Button 
                         variant="outline" 
                         size="sm"
-                        onClick={() => toast.info(
-                          language === "da" 
-                            ? "Dette er en eksempel-robot. Opret din egen robot for at se og redigere kode." 
-                            : "This is an example robot. Create your own robot to view and edit code."
-                        )}
+                        onClick={() => setSelectedRobot(robot)}
                       >
                         {t.dashboard.viewCode}
                       </Button>
                       <Button 
                         variant="outline" 
                         size="sm"
-                        onClick={() => toast.info(
-                          language === "da" 
-                            ? "Dette er en eksempel-robot. Opret din egen robot for at redigere den." 
-                            : "This is an example robot. Create your own robot to edit it."
-                        )}
+                        onClick={() => deleteRobot(robot.id)}
                       >
-                        {t.dashboard.editRobot}
+                        <Trash2 className="h-4 w-4" />
                       </Button>
                     </div>
                   </div>
@@ -165,6 +210,33 @@ const Dashboard = () => {
           </div>
         </div>
       </main>
+
+      {/* Code Modal */}
+      <Dialog open={!!selectedRobot} onOpenChange={() => setSelectedRobot(null)}>
+        <DialogContent className="max-w-3xl max-h-[80vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>{selectedRobot?.name}</DialogTitle>
+          </DialogHeader>
+          <div className="mt-4">
+            <pre className="rounded-lg bg-muted p-4 text-xs overflow-x-auto">
+              <code>{selectedRobot?.generated_code || (language === "da" ? "Ingen kode genereret" : "No code generated")}</code>
+            </pre>
+          </div>
+          <div className="flex justify-end gap-2 mt-4">
+            <Button
+              variant="outline"
+              onClick={() => {
+                if (selectedRobot?.generated_code) {
+                  navigator.clipboard.writeText(selectedRobot.generated_code);
+                  toast.success(language === "da" ? "Kode kopieret!" : "Code copied!");
+                }
+              }}
+            >
+              {language === "da" ? "Kopier kode" : "Copy code"}
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
 
       <Footer />
     </div>

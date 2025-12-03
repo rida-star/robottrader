@@ -1,5 +1,7 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useAuth } from "@/contexts/AuthContext";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
@@ -9,11 +11,23 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 import { HelpCircle, Send, MessageSquare } from "lucide-react";
+import { z } from "zod";
+
+const contactSchema = z.object({
+  name: z.string().min(1).max(100),
+  email: z.string().email().max(255),
+  subject: z.string().min(1).max(200),
+  category: z.string().min(1),
+  message: z.string().min(1).max(2000),
+});
 
 const Support = () => {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const { toast } = useToast();
+  const { user, signOut } = useAuth();
+  const navigate = useNavigate();
   
   const [formData, setFormData] = useState({
     name: "",
@@ -28,12 +42,36 @@ const Support = () => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Simulate submission - will be replaced with Supabase
-    setTimeout(() => {
+    // Validate form data
+    const result = contactSchema.safeParse(formData);
+    if (!result.success) {
+      toast({
+        title: language === "da" ? "Fejl" : "Error",
+        description: language === "da" ? "Udfyld venligst alle felter korrekt" : "Please fill in all fields correctly",
+        variant: "destructive",
+      });
       setIsSubmitting(false);
+      return;
+    }
+
+    try {
+      const { error } = await supabase
+        .from("support_tickets")
+        .insert({
+          user_id: user?.id || null,
+          name: formData.name,
+          email: formData.email,
+          subject: formData.subject,
+          category: formData.category,
+          message: formData.message,
+        });
+
+      if (error) throw error;
+
       toast({
         title: t.support.messageSent,
       });
+      
       setFormData({
         name: "",
         email: "",
@@ -41,7 +79,21 @@ const Support = () => {
         category: "",
         message: "",
       });
-    }, 1000);
+    } catch (error) {
+      console.error("Error submitting support ticket:", error);
+      toast({
+        title: language === "da" ? "Fejl" : "Error",
+        description: language === "da" ? "Kunne ikke sende besked. Prøv igen." : "Failed to send message. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleLogout = async () => {
+    await signOut();
+    navigate("/");
   };
 
   const faqItems = [
@@ -61,7 +113,7 @@ const Support = () => {
 
   return (
     <div className="min-h-screen flex flex-col bg-background">
-      <Navbar isAuthenticated onLogout={() => window.location.href = "/"} />
+      <Navbar isAuthenticated={!!user} onLogout={handleLogout} />
 
       <main className="flex-1 py-8">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
