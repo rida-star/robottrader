@@ -35,7 +35,7 @@ export function Navbar({ isAuthenticated = false, onLogout }: NavbarProps) {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-2">
+          <Link to={isAuthenticated ? "/dashboard" : "/"} className="flex items-center gap-2">
             <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary">
               <Bot className="h-5 w-5 text-primary-foreground" />
             </div>

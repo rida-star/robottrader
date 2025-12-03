@@ -1,18 +1,24 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useSearchParams, Link } from "react-router-dom";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useAuth } from "@/contexts/AuthContext";
 import { Navbar } from "@/components/Navbar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Bot, Mail, Lock, ArrowRight } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { z } from "zod";
+
+const emailSchema = z.string().email().max(255);
+const passwordSchema = z.string().min(6).max(128);
 
 const Auth = () => {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const { toast } = useToast();
+  const { signIn, signUp } = useAuth();
   
   const [isLogin, setIsLogin] = useState(searchParams.get("mode") !== "signup");
   const [email, setEmail] = useState("");
@@ -24,40 +30,112 @@ const Auth = () => {
     setIsLogin(searchParams.get("mode") !== "signup");
   }, [searchParams]);
 
+  const getErrorMessage = (error: Error) => {
+    const message = error.message.toLowerCase();
+    
+    if (message.includes("user already registered")) {
+      return language === "da" 
+        ? "Denne email er allerede registreret. Prøv at logge ind i stedet."
+        : "This email is already registered. Try logging in instead.";
+    }
+    if (message.includes("invalid login credentials")) {
+      return language === "da"
+        ? "Forkert email eller adgangskode."
+        : "Invalid email or password.";
+    }
+    if (message.includes("email not confirmed")) {
+      return language === "da"
+        ? "Bekræft venligst din email før du logger ind."
+        : "Please confirm your email before logging in.";
+    }
+    
+    return language === "da" ? "Der opstod en fejl. Prøv igen." : "An error occurred. Please try again.";
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
 
-    // Basic validation
-    if (!email || !password) {
+    // Validate email
+    const emailResult = emailSchema.safeParse(email);
+    if (!emailResult.success) {
       toast({
-        title: "Error",
-        description: "Please fill in all fields",
+        title: language === "da" ? "Fejl" : "Error",
+        description: language === "da" ? "Ugyldig email adresse" : "Invalid email address",
         variant: "destructive",
       });
       setIsLoading(false);
       return;
     }
 
+    // Validate password
+    const passwordResult = passwordSchema.safeParse(password);
+    if (!passwordResult.success) {
+      toast({
+        title: language === "da" ? "Fejl" : "Error",
+        description: language === "da" 
+          ? "Adgangskoden skal være mindst 6 tegn" 
+          : "Password must be at least 6 characters",
+        variant: "destructive",
+      });
+      setIsLoading(false);
+      return;
+    }
+
+    // Check password confirmation for signup
     if (!isLogin && password !== confirmPassword) {
       toast({
-        title: "Error",
-        description: "Passwords do not match",
+        title: language === "da" ? "Fejl" : "Error",
+        description: language === "da" ? "Adgangskoderne matcher ikke" : "Passwords do not match",
         variant: "destructive",
       });
       setIsLoading(false);
       return;
     }
 
-    // Simulate auth - will be replaced with Supabase
-    setTimeout(() => {
-      setIsLoading(false);
+    try {
+      if (isLogin) {
+        const { error } = await signIn(email, password);
+        if (error) {
+          toast({
+            title: language === "da" ? "Fejl" : "Error",
+            description: getErrorMessage(error),
+            variant: "destructive",
+          });
+          setIsLoading(false);
+          return;
+        }
+        toast({
+          title: language === "da" ? "Logget ind!" : "Logged in!",
+          description: language === "da" ? "Omdirigerer til oversigt..." : "Redirecting to dashboard...",
+        });
+        navigate("/dashboard");
+      } else {
+        const { error } = await signUp(email, password);
+        if (error) {
+          toast({
+            title: language === "da" ? "Fejl" : "Error",
+            description: getErrorMessage(error),
+            variant: "destructive",
+          });
+          setIsLoading(false);
+          return;
+        }
+        toast({
+          title: language === "da" ? "Konto oprettet!" : "Account created!",
+          description: language === "da" ? "Omdirigerer til oversigt..." : "Redirecting to dashboard...",
+        });
+        navigate("/dashboard");
+      }
+    } catch {
       toast({
-        title: isLogin ? "Logged in!" : "Account created!",
-        description: "Redirecting to dashboard...",
+        title: language === "da" ? "Fejl" : "Error",
+        description: language === "da" ? "Der opstod en fejl. Prøv igen." : "An error occurred. Please try again.",
+        variant: "destructive",
       });
-      navigate("/dashboard");
-    }, 1000);
+    }
+    
+    setIsLoading(false);
   };
 
   return (
