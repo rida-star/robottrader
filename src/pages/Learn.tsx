@@ -17,10 +17,13 @@ interface Lesson {
 const lessons: Lesson[] = [
   { id: "basics1", slug: "what-is-trading-robot", level: 1, duration: 10 },
   { id: "basics2", slug: "mt4-vs-mt5", level: 1, duration: 8, relatedStep: 1 },
+  { id: "basics3", slug: "install-robot-mt4", level: 1, duration: 12 },
   { id: "strategy1", slug: "first-strategy", level: 2, duration: 15, relatedStep: 2 },
   { id: "strategy2", slug: "indicators-explained", level: 2, duration: 12, relatedStep: 3 },
+  { id: "strategy3", slug: "backtesting-basics", level: 2, duration: 10 },
   { id: "risk1", slug: "risk-management-basics", level: 3, duration: 10, relatedStep: 4 },
   { id: "risk2", slug: "common-mistakes", level: 3, duration: 8 },
+  { id: "risk3", slug: "position-sizing", level: 3, duration: 10 },
 ];
 
 const Learn = () => {

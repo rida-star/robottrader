@@ -158,6 +158,10 @@ export const translations = {
           title: "MT4 vs MT5 - Hvad skal jeg vælge?",
           desc: "Lær forskellen mellem de to populære platforme",
         },
+        basics3: {
+          title: "Installer din robot i MT4/MT5",
+          desc: "Trin-for-trin guide til at få din robot op at køre",
+        },
         strategy1: {
           title: "Din første strategi",
           desc: "Sådan omsætter du din trading-idé til klare regler",
@@ -166,6 +170,10 @@ export const translations = {
           title: "Indikatorer forklaret",
           desc: "Moving averages, RSI, MACD og andre populære indikatorer",
         },
+        strategy3: {
+          title: "Grundlæggende backtesting",
+          desc: "Test din strategi på historiske data før du risikerer penge",
+        },
         risk1: {
           title: "Grundlæggende risikostyring",
           desc: "Beskyt din kapital med smart money management",
@@ -173,6 +181,10 @@ export const translations = {
         risk2: {
           title: "Almindelige fejl at undgå",
           desc: "De største faldgruber for nye robot-tradere",
+        },
+        risk3: {
+          title: "Position sizing i praksis",
+          desc: "Beregn den rigtige handelsstørrelse for hver handel",
         },
       },
     },
@@ -382,6 +394,10 @@ export const translations = {
           title: "MT4 vs MT5 - What should I choose?",
           desc: "Learn the difference between the two popular platforms",
         },
+        basics3: {
+          title: "Install your robot in MT4/MT5",
+          desc: "Step-by-step guide to get your robot up and running",
+        },
         strategy1: {
           title: "Your first strategy",
           desc: "How to turn your trading idea into clear rules",
@@ -390,6 +406,10 @@ export const translations = {
           title: "Indicators explained",
           desc: "Moving averages, RSI, MACD and other popular indicators",
         },
+        strategy3: {
+          title: "Backtesting basics",
+          desc: "Test your strategy on historical data before risking money",
+        },
         risk1: {
           title: "Basic risk management",
           desc: "Protect your capital with smart money management",
@@ -397,6 +417,10 @@ export const translations = {
         risk2: {
           title: "Common mistakes to avoid",
           desc: "The biggest pitfalls for new robot traders",
+        },
+        risk3: {
+          title: "Position sizing in practice",
+          desc: "Calculate the right trade size for each trade",
         },
       },
     },

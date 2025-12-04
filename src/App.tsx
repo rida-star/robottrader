@@ -10,6 +10,7 @@ import Auth from "./pages/Auth";
 import Dashboard from "./pages/Dashboard";
 import RobotBuilder from "./pages/RobotBuilder";
 import Learn from "./pages/Learn";
+import LessonDetail from "./pages/LessonDetail";
 import Support from "./pages/Support";
 import NotFound from "./pages/NotFound";
 
@@ -81,7 +82,7 @@ const AppRoutes = () => (
       }
     />
     <Route path="/learn" element={<Learn />} />
-    <Route path="/learn/:slug" element={<Learn />} />
+    <Route path="/learn/:slug" element={<LessonDetail />} />
     <Route path="/support" element={<Support />} />
     <Route path="*" element={<NotFound />} />
   </Routes>
