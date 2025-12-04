@@ -4,28 +4,38 @@ import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { ArrowLeft, ArrowRight, Clock, BookOpen } from "lucide-react";
+import { ArrowLeft, ArrowRight, BookOpen } from "lucide-react";
+
+import lessonBasics1 from "@/assets/lessons/lesson-basics1.jpg";
+import lessonBasics2 from "@/assets/lessons/lesson-basics2.jpg";
+import lessonBasics3 from "@/assets/lessons/lesson-basics3.jpg";
+import lessonStrategy1 from "@/assets/lessons/lesson-strategy1.jpg";
+import lessonStrategy2 from "@/assets/lessons/lesson-strategy2.jpg";
+import lessonStrategy3 from "@/assets/lessons/lesson-strategy3.jpg";
+import lessonRisk1 from "@/assets/lessons/lesson-risk1.jpg";
+import lessonRisk2 from "@/assets/lessons/lesson-risk2.jpg";
+import lessonRisk3 from "@/assets/lessons/lesson-risk3.jpg";
 
 interface LessonContent {
   id: string;
   slug: string;
   level: 1 | 2 | 3;
-  duration: number;
+  image: string;
   relatedStep?: number;
   nextSlug?: string;
   prevSlug?: string;
 }
 
 const lessonData: LessonContent[] = [
-  { id: "basics1", slug: "what-is-trading-robot", level: 1, duration: 10, nextSlug: "mt4-vs-mt5" },
-  { id: "basics2", slug: "mt4-vs-mt5", level: 1, duration: 8, relatedStep: 1, prevSlug: "what-is-trading-robot", nextSlug: "install-robot-mt4" },
-  { id: "basics3", slug: "install-robot-mt4", level: 1, duration: 12, prevSlug: "mt4-vs-mt5", nextSlug: "first-strategy" },
-  { id: "strategy1", slug: "first-strategy", level: 2, duration: 15, relatedStep: 2, prevSlug: "install-robot-mt4", nextSlug: "indicators-explained" },
-  { id: "strategy2", slug: "indicators-explained", level: 2, duration: 12, relatedStep: 3, prevSlug: "first-strategy", nextSlug: "backtesting-basics" },
-  { id: "strategy3", slug: "backtesting-basics", level: 2, duration: 10, prevSlug: "indicators-explained", nextSlug: "risk-management-basics" },
-  { id: "risk1", slug: "risk-management-basics", level: 3, duration: 10, relatedStep: 4, prevSlug: "backtesting-basics", nextSlug: "common-mistakes" },
-  { id: "risk2", slug: "common-mistakes", level: 3, duration: 8, prevSlug: "risk-management-basics", nextSlug: "position-sizing" },
-  { id: "risk3", slug: "position-sizing", level: 3, duration: 10, prevSlug: "common-mistakes" },
+  { id: "basics1", slug: "what-is-trading-robot", level: 1, image: lessonBasics1, nextSlug: "mt4-vs-mt5" },
+  { id: "basics2", slug: "mt4-vs-mt5", level: 1, image: lessonBasics2, relatedStep: 1, prevSlug: "what-is-trading-robot", nextSlug: "install-robot-mt4" },
+  { id: "basics3", slug: "install-robot-mt4", level: 1, image: lessonBasics3, prevSlug: "mt4-vs-mt5", nextSlug: "first-strategy" },
+  { id: "strategy1", slug: "first-strategy", level: 2, image: lessonStrategy1, relatedStep: 2, prevSlug: "install-robot-mt4", nextSlug: "indicators-explained" },
+  { id: "strategy2", slug: "indicators-explained", level: 2, image: lessonStrategy2, relatedStep: 3, prevSlug: "first-strategy", nextSlug: "backtesting-basics" },
+  { id: "strategy3", slug: "backtesting-basics", level: 2, image: lessonStrategy3, prevSlug: "indicators-explained", nextSlug: "risk-management-basics" },
+  { id: "risk1", slug: "risk-management-basics", level: 3, image: lessonRisk1, relatedStep: 4, prevSlug: "backtesting-basics", nextSlug: "common-mistakes" },
+  { id: "risk2", slug: "common-mistakes", level: 3, image: lessonRisk2, prevSlug: "risk-management-basics", nextSlug: "position-sizing" },
+  { id: "risk3", slug: "position-sizing", level: 3, image: lessonRisk3, prevSlug: "common-mistakes" },
 ];
 
 const LessonDetail = () => {
@@ -526,16 +536,21 @@ const LessonDetail = () => {
             {language === "da" ? "Tilbage til læringscenter" : "Back to learning center"}
           </Link>
 
+          {/* Header image */}
+          <div className="rounded-xl overflow-hidden mb-8 animate-fade-in">
+            <img 
+              src={lesson.image} 
+              alt={lessonContent.title || lessonMeta?.title}
+              className="w-full h-48 sm:h-64 object-cover"
+            />
+          </div>
+
           {/* Header */}
-          <div className="mb-8 animate-fade-in">
+          <div className="mb-8 animate-fade-in" style={{ animationDelay: "50ms" }}>
             <div className="flex items-center gap-3 mb-4">
               <Badge variant="outline" className={getLevelColor(lesson.level)}>
                 {t.learn.level} {lesson.level}: {getLevelLabel(lesson.level)}
               </Badge>
-              <div className="flex items-center gap-1 text-sm text-muted-foreground">
-                <Clock className="h-4 w-4" />
-                {lesson.duration} {t.learn.minutes}
-              </div>
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold text-foreground mb-2">
               {lessonContent.title || lessonMeta?.title}

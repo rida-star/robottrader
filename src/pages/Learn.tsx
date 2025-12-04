@@ -4,26 +4,36 @@ import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { BookOpen, PlayCircle, Clock, ArrowRight } from "lucide-react";
+import { BookOpen, ArrowRight } from "lucide-react";
+
+import lessonBasics1 from "@/assets/lessons/lesson-basics1.jpg";
+import lessonBasics2 from "@/assets/lessons/lesson-basics2.jpg";
+import lessonBasics3 from "@/assets/lessons/lesson-basics3.jpg";
+import lessonStrategy1 from "@/assets/lessons/lesson-strategy1.jpg";
+import lessonStrategy2 from "@/assets/lessons/lesson-strategy2.jpg";
+import lessonStrategy3 from "@/assets/lessons/lesson-strategy3.jpg";
+import lessonRisk1 from "@/assets/lessons/lesson-risk1.jpg";
+import lessonRisk2 from "@/assets/lessons/lesson-risk2.jpg";
+import lessonRisk3 from "@/assets/lessons/lesson-risk3.jpg";
 
 interface Lesson {
   id: string;
   slug: string;
   level: 1 | 2 | 3;
-  duration: number;
+  image: string;
   relatedStep?: number;
 }
 
 const lessons: Lesson[] = [
-  { id: "basics1", slug: "what-is-trading-robot", level: 1, duration: 10 },
-  { id: "basics2", slug: "mt4-vs-mt5", level: 1, duration: 8, relatedStep: 1 },
-  { id: "basics3", slug: "install-robot-mt4", level: 1, duration: 12 },
-  { id: "strategy1", slug: "first-strategy", level: 2, duration: 15, relatedStep: 2 },
-  { id: "strategy2", slug: "indicators-explained", level: 2, duration: 12, relatedStep: 3 },
-  { id: "strategy3", slug: "backtesting-basics", level: 2, duration: 10 },
-  { id: "risk1", slug: "risk-management-basics", level: 3, duration: 10, relatedStep: 4 },
-  { id: "risk2", slug: "common-mistakes", level: 3, duration: 8 },
-  { id: "risk3", slug: "position-sizing", level: 3, duration: 10 },
+  { id: "basics1", slug: "what-is-trading-robot", level: 1, image: lessonBasics1 },
+  { id: "basics2", slug: "mt4-vs-mt5", level: 1, image: lessonBasics2, relatedStep: 1 },
+  { id: "basics3", slug: "install-robot-mt4", level: 1, image: lessonBasics3 },
+  { id: "strategy1", slug: "first-strategy", level: 2, image: lessonStrategy1, relatedStep: 2 },
+  { id: "strategy2", slug: "indicators-explained", level: 2, image: lessonStrategy2, relatedStep: 3 },
+  { id: "strategy3", slug: "backtesting-basics", level: 2, image: lessonStrategy3 },
+  { id: "risk1", slug: "risk-management-basics", level: 3, image: lessonRisk1, relatedStep: 4 },
+  { id: "risk2", slug: "common-mistakes", level: 3, image: lessonRisk2 },
+  { id: "risk3", slug: "position-sizing", level: 3, image: lessonRisk3 },
 ];
 
 const Learn = () => {
@@ -99,28 +109,26 @@ const Learn = () => {
                       <Link
                         key={lesson.id}
                         to={`/learn/${lesson.slug}`}
-                        className="group rounded-xl border border-border bg-card p-6 card-shadow transition-all hover:card-shadow-hover hover:border-primary/30"
+                        className="group rounded-xl border border-border bg-card overflow-hidden card-shadow transition-all hover:card-shadow-hover hover:border-primary/30"
                         style={{ animationDelay: `${(levelIndex * 100) + (index * 50)}ms` }}
                       >
-                        {/* Video placeholder */}
-                        <div className="relative aspect-video rounded-lg bg-muted mb-4 overflow-hidden">
-                          <div className="absolute inset-0 flex items-center justify-center">
-                            <PlayCircle className="h-12 w-12 text-muted-foreground/50 group-hover:text-primary transition-colors" />
-                          </div>
+                        {/* Lesson image */}
+                        <div className="relative aspect-video overflow-hidden">
+                          <img 
+                            src={lesson.image} 
+                            alt={lessonData.title}
+                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                          />
                         </div>
 
-                        <h3 className="font-semibold text-foreground mb-2 group-hover:text-primary transition-colors">
-                          {lessonData.title}
-                        </h3>
-                        <p className="text-sm text-muted-foreground mb-4">
-                          {lessonData.desc}
-                        </p>
+                        <div className="p-6">
+                          <h3 className="font-semibold text-foreground mb-2 group-hover:text-primary transition-colors">
+                            {lessonData.title}
+                          </h3>
+                          <p className="text-sm text-muted-foreground mb-4">
+                            {lessonData.desc}
+                          </p>
 
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center gap-1 text-sm text-muted-foreground">
-                            <Clock className="h-4 w-4" />
-                            {lesson.duration} {t.learn.minutes}
-                          </div>
                           {lesson.relatedStep && (
                             <span className="text-xs text-primary">
                               {t.learn.relatedStep}: {lesson.relatedStep}
