@@ -18,19 +18,13 @@ export function Navbar({ isAuthenticated = false, onLogout }: NavbarProps) {
   const location = useLocation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  const navLinks = isAuthenticated
-    ? [
-        { href: "/dashboard", label: t.nav.dashboard },
-        { href: "/builder", label: t.nav.robotBuilder },
-        { href: "/learn", label: t.nav.learn },
-        { href: "/support", label: t.nav.support },
-        { href: "/blog", label: blogLabel[language] },
-      ]
-    : [
-        { href: "/learn", label: t.nav.learn },
-        { href: "/support", label: t.nav.support },
-        { href: "/blog", label: blogLabel[language] },
-      ];
+  const navLinks = [
+    { href: "/dashboard", label: t.nav.dashboard },
+    { href: "/builder", label: t.nav.robotBuilder },
+    { href: "/learn", label: t.nav.learn },
+    { href: "/support", label: t.nav.support },
+    { href: "/blog", label: blogLabel[language] },
+  ];
 
   const isActive = (href: string) => location.pathname === href || location.pathname.startsWith(href + "/");
 
