@@ -4,7 +4,7 @@ import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { DisclaimerBanner } from "@/components/DisclaimerBanner";
 import { Button } from "@/components/ui/button";
-import { Bot, Settings, Code, Target, Shield, Users, Lightbulb, ArrowRight, CheckCircle2 } from "lucide-react";
+import { Bot, Settings, Code, Target, Shield, Users, Lightbulb, ArrowRight, CheckCircle2, LayoutDashboard, Wrench, GraduationCap, HeadphonesIcon, Newspaper } from "lucide-react";
 
 const Index = () => {
   const { t } = useLanguage();
@@ -45,6 +45,51 @@ const Index = () => {
                   <Link to="/learn">{t.landing.ctaLearn}</Link>
                 </Button>
               </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Get Started Guide */}
+        <section className="py-20">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl font-bold text-foreground mb-4">
+                {t.landing.getStarted}
+              </h2>
+              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+                {t.landing.getStartedSubtitle}
+              </p>
+            </div>
+            
+            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+              {[
+                { icon: LayoutDashboard, title: t.landing.feature1Title, desc: t.landing.feature1Desc, href: "/dashboard", color: "bg-blue-500/10 text-blue-600" },
+                { icon: Wrench, title: t.landing.feature2Title, desc: t.landing.feature2Desc, href: "/builder", color: "bg-primary/10 text-primary" },
+                { icon: GraduationCap, title: t.landing.feature3Title, desc: t.landing.feature3Desc, href: "/learn", color: "bg-green-500/10 text-green-600" },
+                { icon: HeadphonesIcon, title: t.landing.feature4Title, desc: t.landing.feature4Desc, href: "/support", color: "bg-orange-500/10 text-orange-600" },
+                { icon: Newspaper, title: t.landing.feature5Title, desc: t.landing.feature5Desc, href: "/blog", color: "bg-purple-500/10 text-purple-600" },
+              ].map((item, index) => (
+                <Link
+                  key={index}
+                  to={item.href}
+                  className="group rounded-xl bg-card p-6 card-shadow transition-all hover:card-shadow-hover hover:-translate-y-1 animate-fade-in"
+                  style={{ animationDelay: `${index * 100}ms` }}
+                >
+                  <div className={`inline-flex h-12 w-12 items-center justify-center rounded-lg ${item.color}`}>
+                    <item.icon className="h-6 w-6" />
+                  </div>
+                  <h3 className="mt-4 text-lg font-semibold text-foreground group-hover:text-primary transition-colors">
+                    {item.title}
+                  </h3>
+                  <p className="mt-2 text-sm text-muted-foreground">
+                    {item.desc}
+                  </p>
+                  <div className="mt-4 flex items-center text-sm font-medium text-primary opacity-0 group-hover:opacity-100 transition-opacity">
+                    <span>Gå til {item.title.toLowerCase()}</span>
+                    <ArrowRight className="ml-1 h-4 w-4" />
+                  </div>
+                </Link>
+              ))}
             </div>
           </div>
         </section>
