@@ -220,6 +220,51 @@ export const translations = {
         a5: "Nej. Denne app er kun til uddannelsesmæssige formål. Vi giver ikke personlig investeringsrådgivning. Tal med en autoriseret rådgiver før du træffer investeringsbeslutninger.",
       },
     },
+    // Blog
+    blog: {
+      title: "Blog",
+      subtitle: "Artikler om algoritmisk trading, robotter og risikostyring",
+      readMore: "Læs mere",
+      backToBlog: "Tilbage til blog",
+      disclaimer: "Vigtig information",
+      disclaimerText: "Denne artikel er kun til uddannelsesmæssige formål. Vi giver ikke personlig investeringsrådgivning eller garanterer profit. Al trading indebærer risiko for tab.",
+      categoryBasics: "Grundlæggende",
+      categoryRisk: "Risiko",
+      categoryTrends: "Trends",
+      categoryTips: "Tips",
+      articles: {
+        "what-is-algorithmic-trading": {
+          title: "Hvad er algoritmisk trading?",
+          excerpt: "Lær det grundlæggende om automatiseret handel og hvordan tradingrobotter fungerer.",
+          content: "Algoritmisk trading, også kendt som automatiseret trading, er brugen af computerprogrammer til at udføre handler baseret på foruddefinerede regler. I stedet for at sidde foran skærmen og manuelt placere ordrer, lader du en robot gøre arbejdet for dig.\n\nDenne tilgang til trading har vundet enorm popularitet de seneste år. Professionelle tradere og institutioner har brugt algoritmer i årtier, men nu er teknologien også tilgængelig for private tradere.\n\nEn handelsrobot følger specifikke regler, som du definerer. Det kan være alt fra simple regler som 'køb når prisen krydser et moving average' til komplekse strategier med flere indikatorer og betingelser.\n\nFordelene ved algoritmisk trading inkluderer: ingen emotionelle beslutninger, konsistent udførelse af din strategi, og muligheden for at handle 24/7 uden at være til stede.\n\nDet er dog vigtigt at huske, at ingen robot garanterer profit. Markederne er uforudsigelige, og selv den bedste algoritme kan tabe penge. Start altid med at teste på en demo-konto."
+        },
+        "risks-of-robot-trading": {
+          title: "Risici ved robot-trading: Hvad du skal vide",
+          excerpt: "Forstå de potentielle farer og hvordan du beskytter dig selv når du bruger handelsrobotter.",
+          content: "Robot-trading kan virke som en nem vej til profit, men det kommer med betydelige risici, som enhver trader bør forstå.\n\nMarkedsrisiko er den mest fundamentale risiko. Uanset hvor sofistikeret din robot er, kan markederne bevæge sig på uventede måder. Flash crashes, politiske begivenheder og økonomiske nyheder kan skabe volatile forhold, der kan resultere i store tab.\n\nTekniske fejl er en anden bekymring. Din robot kan have bugs, din internetforbindelse kan svigte, eller din broker kan have nedetid. Alle disse faktorer kan påvirke dine handler negativt.\n\nOveroptimering er en almindelig fælde. Mange begyndere finjusterer deres robot til at præstere perfekt på historiske data, kun for at opdage, at den fejler i live-markedet. Dette kaldes curve-fitting.\n\nFor at beskytte dig selv: brug altid stop-loss ordrer, risiker aldrig mere end du har råd til at tabe, test grundigt på demo-konti, og overvåg din robot regelmæssigt.\n\nHusk: Der findes ingen 'hellig gral' i trading. Hvis nogen lover garanteret profit, er det sandsynligvis for godt til at være sandt."
+        },
+        "benefits-of-automated-trading": {
+          title: "Fordelene ved automatiseret trading",
+          excerpt: "Opdag hvorfor flere og flere tradere vælger at automatisere deres strategier.",
+          content: "Automatiseret trading tilbyder flere fordele, der gør det attraktivt for både nye og erfarne tradere.\n\nEmotionsfri handel er måske den største fordel. Mennesker træffer ofte dårlige beslutninger baseret på frygt eller grådighed. En robot følger dine regler præcist, uden at lade følelser påvirke beslutningerne.\n\nKonsistens er en anden nøglefordel. Din robot vil udføre din strategi på nøjagtig samme måde hver gang, uden at glemme regler eller lave fejl på grund af træthed.\n\nHastighed og effektivitet er også vigtige faktorer. En robot kan analysere markedet og udføre handler på millisekunder - meget hurtigere end nogen menneske kan.\n\nMultitasking bliver muligt. Du kan have flere robotter, der handler forskellige markeder eller strategier samtidigt, noget der ville være umuligt manuelt.\n\nBacktesting giver dig mulighed for at teste din strategi på historiske data, før du risikerer rigtige penge.\n\nDet er dog vigtigt at balancere disse fordele med de involverede risici. Automatiseret trading er et værktøj, ikke en garanti for succes."
+        },
+        "common-robot-trading-mistakes": {
+          title: "De mest almindelige fejl ved robot-trading",
+          excerpt: "Undgå disse klassiske faldgruber, som mange nye robot-tradere falder i.",
+          content: "Mange nye robot-tradere begår de samme fejl. Ved at kende til dem kan du undgå dyre lærepenge.\n\nManglende demo-testing er fejl nummer et. Nogle springrer direkte til live-trading uden at teste deres robot grundigt. Dette er en opskrift på katastrofe.\n\nUrealistiske forventninger er også almindelige. Forvent ikke, at din robot vil fordoble din konto hver måned. Professionelle tradere er glade for stabile årlige afkast.\n\nIgnorering af risikostyring dræber mange konti. Uden proper stop-loss og position sizing kan én dårlig handel ødelægge alt.\n\nOveroptimering af strategien til historiske data skaber robotter, der ser fantastiske ud på papiret, men fejler i virkeligheden.\n\nManglende overvågning er farligt. Selvom robotten er automatisk, skal du stadig holde øje med dens performance og markedsforholdene.\n\nAt handle på for mange markeder samtidigt kan sprede din opmærksomhed og kapital for tyndt.\n\nHusk: Succes i robot-trading kræver tålmodighed, disciplin og kontinuerlig læring."
+        },
+        "future-of-trading-robots": {
+          title: "Fremtiden for handelsrobotter",
+          excerpt: "Hvordan vil AI og teknologi forme fremtidens automatiserede trading?",
+          content: "Verden af handelsrobotter udvikler sig hastigt, drevet af fremskridt inden for kunstig intelligens og maskinlæring.\n\nAI-drevne algoritmer bliver mere sofistikerede. Moderne robotter kan lære af data og tilpasse sig skiftende markedsforhold - noget der var utænkeligt for få år siden.\n\nMachine learning gør det muligt for robotter at identificere mønstre, som mennesker ikke kan se. Dette åbner nye muligheder for strategiudvikling.\n\nCloud computing har gjort kraftfuld computerkraft tilgængelig for alle. Du behøver ikke længere dyre servere for at køre avancerede algoritmer.\n\nDemokratisering af teknologi betyder, at værktøjer, der tidligere var forbeholdt store institutioner, nu er tilgængelige for private tradere.\n\nRegulering vil sandsynligvis øges, efterhånden som algoritmisk trading bliver mere udbredt. Dette kan påvirke, hvordan robotter bruges.\n\nTrods alle fremskridt forbliver de grundlæggende principper de samme: risikostyring, diversificering og realistiske forventninger er stadig nøglen til succes.\n\nFremtiden er spændende, men husk at ny teknologi også bringer nye risici."
+        },
+        "importance-of-demo-testing": {
+          title: "Hvorfor demo-testing er afgørende",
+          excerpt: "Lær hvorfor du altid bør teste din robot på en demo-konto før live-trading.",
+          content: "Demo-testing er et af de vigtigste skridt i robot-trading, og det er gratis at gøre. Der er ingen undskyldning for at springe det over.\n\nEn demo-konto giver dig mulighed for at teste din robot med virtuelle penge. Du kan se, hvordan den performer under forskellige markedsforhold uden at risikere en krone.\n\nFejlfinding bliver nemmere på demo. Du kan identificere bugs og problemer i din strategi, før de koster dig rigtige penge.\n\nForståelse af din robots opførsel kræver tid. Demo-testing giver dig mulighed for at lære, hvordan robotten reagerer på forskellige scenarier.\n\nPsykologisk forberedelse er også vigtig. Ved at se din robot handle på demo, bliver du mere komfortabel med at lade den handle live.\n\nAnbefalet testperiode er minimum 1-3 måneder. Dette giver din robot tid til at opleve forskellige markedsforhold.\n\nDokumentation af resultater er vigtig. Hold styr på alle handler, så du kan analysere performance over tid.\n\nHusk: Hvis din robot ikke kan tjene penge på demo, vil den sandsynligvis heller ikke gøre det live. Vær tålmodig og test grundigt."
+        }
+      },
+    },
     // Common
     common: {
       loading: "Indlæser...",
@@ -454,6 +499,51 @@ export const translations = {
         a4: "No, not currently. This app generates robot code that you download and install in your MetaTrader yourself. We do not have access to your broker or your trades.",
         q5: "Is this financial advice?",
         a5: "No. This app is for educational purposes only. We do not provide personalized investment advice. Talk to an authorized advisor before making investment decisions.",
+      },
+    },
+    // Blog
+    blog: {
+      title: "Blog",
+      subtitle: "Articles about algorithmic trading, robots and risk management",
+      readMore: "Read more",
+      backToBlog: "Back to blog",
+      disclaimer: "Important information",
+      disclaimerText: "This article is for educational purposes only. We do not provide personalized investment advice or guarantee profits. All trading involves risk of loss.",
+      categoryBasics: "Basics",
+      categoryRisk: "Risk",
+      categoryTrends: "Trends",
+      categoryTips: "Tips",
+      articles: {
+        "what-is-algorithmic-trading": {
+          title: "What is algorithmic trading?",
+          excerpt: "Learn the basics of automated trading and how trading robots work.",
+          content: "Algorithmic trading, also known as automated trading, is the use of computer programs to execute trades based on predefined rules. Instead of sitting in front of the screen manually placing orders, you let a robot do the work for you.\n\nThis approach to trading has gained enormous popularity in recent years. Professional traders and institutions have been using algorithms for decades, but now the technology is also available to private traders.\n\nA trading robot follows specific rules that you define. This can be anything from simple rules like 'buy when the price crosses a moving average' to complex strategies with multiple indicators and conditions.\n\nThe advantages of algorithmic trading include: no emotional decisions, consistent execution of your strategy, and the ability to trade 24/7 without being present.\n\nHowever, it's important to remember that no robot guarantees profit. Markets are unpredictable, and even the best algorithm can lose money. Always start by testing on a demo account."
+        },
+        "risks-of-robot-trading": {
+          title: "Risks of robot trading: What you need to know",
+          excerpt: "Understand the potential dangers and how to protect yourself when using trading robots.",
+          content: "Robot trading may seem like an easy path to profit, but it comes with significant risks that every trader should understand.\n\nMarket risk is the most fundamental risk. No matter how sophisticated your robot is, markets can move in unexpected ways. Flash crashes, political events, and economic news can create volatile conditions that can result in large losses.\n\nTechnical failures are another concern. Your robot may have bugs, your internet connection may fail, or your broker may have downtime. All these factors can negatively affect your trades.\n\nOver-optimization is a common trap. Many beginners fine-tune their robot to perform perfectly on historical data, only to discover that it fails in the live market. This is called curve-fitting.\n\nTo protect yourself: always use stop-loss orders, never risk more than you can afford to lose, test thoroughly on demo accounts, and monitor your robot regularly.\n\nRemember: There is no 'holy grail' in trading. If someone promises guaranteed profit, it's probably too good to be true."
+        },
+        "benefits-of-automated-trading": {
+          title: "Benefits of automated trading",
+          excerpt: "Discover why more and more traders are choosing to automate their strategies.",
+          content: "Automated trading offers several advantages that make it attractive to both new and experienced traders.\n\nEmotion-free trading is perhaps the biggest advantage. Humans often make poor decisions based on fear or greed. A robot follows your rules precisely, without letting emotions affect decisions.\n\nConsistency is another key advantage. Your robot will execute your strategy in exactly the same way every time, without forgetting rules or making mistakes due to fatigue.\n\nSpeed and efficiency are also important factors. A robot can analyze the market and execute trades in milliseconds - much faster than any human can.\n\nMultitasking becomes possible. You can have multiple robots trading different markets or strategies simultaneously, something that would be impossible manually.\n\nBacktesting allows you to test your strategy on historical data before risking real money.\n\nHowever, it's important to balance these advantages with the risks involved. Automated trading is a tool, not a guarantee of success."
+        },
+        "common-robot-trading-mistakes": {
+          title: "The most common robot trading mistakes",
+          excerpt: "Avoid these classic pitfalls that many new robot traders fall into.",
+          content: "Many new robot traders make the same mistakes. By knowing about them, you can avoid expensive lessons.\n\nLack of demo testing is mistake number one. Some jump straight to live trading without thoroughly testing their robot. This is a recipe for disaster.\n\nUnrealistic expectations are also common. Don't expect your robot to double your account every month. Professional traders are happy with stable annual returns.\n\nIgnoring risk management kills many accounts. Without proper stop-loss and position sizing, one bad trade can ruin everything.\n\nOver-optimization of the strategy to historical data creates robots that look fantastic on paper but fail in reality.\n\nLack of monitoring is dangerous. Even though the robot is automatic, you still need to keep an eye on its performance and market conditions.\n\nTrading too many markets simultaneously can spread your attention and capital too thin.\n\nRemember: Success in robot trading requires patience, discipline, and continuous learning."
+        },
+        "future-of-trading-robots": {
+          title: "The future of trading robots",
+          excerpt: "How will AI and technology shape the future of automated trading?",
+          content: "The world of trading robots is evolving rapidly, driven by advances in artificial intelligence and machine learning.\n\nAI-driven algorithms are becoming more sophisticated. Modern robots can learn from data and adapt to changing market conditions - something unthinkable just a few years ago.\n\nMachine learning enables robots to identify patterns that humans cannot see. This opens new opportunities for strategy development.\n\nCloud computing has made powerful computing available to everyone. You no longer need expensive servers to run advanced algorithms.\n\nDemocratization of technology means that tools previously reserved for large institutions are now available to private traders.\n\nRegulation will likely increase as algorithmic trading becomes more widespread. This may affect how robots are used.\n\nDespite all advances, the fundamental principles remain the same: risk management, diversification, and realistic expectations are still the key to success.\n\nThe future is exciting, but remember that new technology also brings new risks."
+        },
+        "importance-of-demo-testing": {
+          title: "Why demo testing is crucial",
+          excerpt: "Learn why you should always test your robot on a demo account before live trading.",
+          content: "Demo testing is one of the most important steps in robot trading, and it's free to do. There's no excuse to skip it.\n\nA demo account allows you to test your robot with virtual money. You can see how it performs under different market conditions without risking a penny.\n\nDebugging becomes easier on demo. You can identify bugs and problems in your strategy before they cost you real money.\n\nUnderstanding your robot's behavior takes time. Demo testing gives you the opportunity to learn how the robot reacts to different scenarios.\n\nPsychological preparation is also important. By watching your robot trade on demo, you become more comfortable letting it trade live.\n\nRecommended test period is minimum 1-3 months. This gives your robot time to experience different market conditions.\n\nDocumenting results is important. Keep track of all trades so you can analyze performance over time.\n\nRemember: If your robot can't make money on demo, it probably won't do so live either. Be patient and test thoroughly."
+        }
       },
     },
     // Common

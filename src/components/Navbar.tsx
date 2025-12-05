@@ -6,13 +6,15 @@ import { Bot, Menu, X } from "lucide-react";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 
+const blogLabel = { da: "Blog", en: "Blog" };
+
 interface NavbarProps {
   isAuthenticated?: boolean;
   onLogout?: () => void;
 }
 
 export function Navbar({ isAuthenticated = false, onLogout }: NavbarProps) {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const location = useLocation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -22,13 +24,15 @@ export function Navbar({ isAuthenticated = false, onLogout }: NavbarProps) {
         { href: "/builder", label: t.nav.robotBuilder },
         { href: "/learn", label: t.nav.learn },
         { href: "/support", label: t.nav.support },
+        { href: "/blog", label: blogLabel[language] },
       ]
     : [
         { href: "/learn", label: t.nav.learn },
         { href: "/support", label: t.nav.support },
+        { href: "/blog", label: blogLabel[language] },
       ];
 
-  const isActive = (href: string) => location.pathname === href;
+  const isActive = (href: string) => location.pathname === href || location.pathname.startsWith(href + "/");
 
   return (
     <nav className="sticky top-0 z-50 border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
