@@ -85,7 +85,7 @@ export type Database = {
           status: string | null
           subject: string
           updated_at: string | null
-          user_id: string | null
+          user_id: string
         }
         Insert: {
           category: string
@@ -97,7 +97,7 @@ export type Database = {
           status?: string | null
           subject: string
           updated_at?: string | null
-          user_id?: string | null
+          user_id: string
         }
         Update: {
           category?: string
@@ -109,7 +109,7 @@ export type Database = {
           status?: string | null
           subject?: string
           updated_at?: string | null
-          user_id?: string | null
+          user_id?: string
         }
         Relationships: []
       }

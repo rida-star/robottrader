@@ -40,6 +40,18 @@ const Support = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Require authentication to submit tickets
+    if (!user) {
+      toast({
+        title: language === "da" ? "Log ind påkrævet" : "Login required",
+        description: language === "da" ? "Du skal være logget ind for at sende en supportbesked" : "You must be logged in to submit a support ticket",
+        variant: "destructive",
+      });
+      navigate("/auth");
+      return;
+    }
+    
     setIsSubmitting(true);
 
     // Validate form data
@@ -58,7 +70,7 @@ const Support = () => {
       const { error } = await supabase
         .from("support_tickets")
         .insert({
-          user_id: user?.id || null,
+          user_id: user.id,
           name: formData.name,
           email: formData.email,
           subject: formData.subject,
