@@ -14,6 +14,7 @@ import LessonDetail from "./pages/LessonDetail";
 import Support from "./pages/Support";
 import Blog from "./pages/Blog";
 import BlogArticle from "./pages/BlogArticle";
+import Pricing from "./pages/Pricing";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -88,6 +89,7 @@ const AppRoutes = () => (
     <Route path="/support" element={<Support />} />
     <Route path="/blog" element={<Blog />} />
     <Route path="/blog/:slug" element={<BlogArticle />} />
+    <Route path="/pricing" element={<Pricing />} />
     <Route path="*" element={<NotFound />} />
   </Routes>
 );

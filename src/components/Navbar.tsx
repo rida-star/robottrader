@@ -7,6 +7,7 @@ import { useState } from "react";
 import { cn } from "@/lib/utils";
 
 const blogLabel = { da: "Blog", en: "Blog" };
+const pricingLabel = { da: "Priser", en: "Pricing" };
 
 interface NavbarProps {
   isAuthenticated?: boolean;
@@ -24,6 +25,7 @@ export function Navbar({ isAuthenticated = false, onLogout }: NavbarProps) {
     { href: "/learn", label: t.nav.learn },
     { href: "/support", label: t.nav.support },
     { href: "/blog", label: blogLabel[language] },
+    { href: "/pricing", label: pricingLabel[language] },
   ];
 
   const isActive = (href: string) => location.pathname === href || location.pathname.startsWith(href + "/");
