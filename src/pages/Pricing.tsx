@@ -99,7 +99,6 @@ export default function Pricing() {
   return (
     <div className="min-h-screen flex flex-col bg-background">
       <Navbar isAuthenticated={!!user} onLogout={signOut} />
-      <DisclaimerBanner />
 
       <main className="flex-1">
         {/* Hero */}
@@ -225,6 +224,7 @@ export default function Pricing() {
         </section>
       </main>
 
+      <DisclaimerBanner />
       <Footer />
     </div>
   );
