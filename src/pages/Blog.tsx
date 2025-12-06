@@ -61,7 +61,6 @@ export default function Blog() {
   return (
     <div className="min-h-screen bg-background">
       <Navbar isAuthenticated={!!user} onLogout={signOut} />
-      <DisclaimerBanner />
 
       <main className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
         <div className="mb-12 text-center">
@@ -112,6 +111,7 @@ export default function Blog() {
         </div>
       </main>
 
+      <DisclaimerBanner />
       <Footer />
     </div>
   );
